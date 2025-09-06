@@ -17,7 +17,32 @@ struct Vec2D {
         return *this;
     }
 
-    auto operator<=>(const Vec2D&) const = default;
+    bool operator==(const Vec2D& other) const {
+        return x == other.x && y == other.y;
+    }
+
+    bool operator!=(const Vec2D& other) const {
+        return !(*this == other);
+    }
+
+    bool operator<(const Vec2D& other) const {
+        if (x != other.x) {
+            return x < other.x;
+        }
+        return y < other.y;
+    }
+
+    bool operator<=(const Vec2D& other) const {
+        return !(*this > other);
+    }
+
+    bool operator>(const Vec2D& other) const {
+        return other < *this;
+    }
+
+    bool operator>=(const Vec2D& other) const {
+        return !(*this < other);
+    }
 
     double x = 0;
     double y = 0;
@@ -44,7 +69,33 @@ struct Point2D {
         return *this;
     }
 
-    auto operator<=>(const Point2D&) const = default;
+    // Операторы сравнения
+    bool operator==(const Point2D& other) const {
+        return x == other.x && y == other.y;
+    }
+
+    bool operator!=(const Point2D& other) const {
+        return !(*this == other);
+    }
+
+    bool operator<(const Point2D& other) const {
+        if (x != other.x) {
+            return x < other.x;
+        }
+        return y < other.y;
+    }
+
+    bool operator<=(const Point2D& other) const {
+        return !(*this > other);
+    }
+
+    bool operator>(const Point2D& other) const {
+        return other < *this;
+    }
+
+    bool operator>=(const Point2D& other) const {
+        return !(*this < other);
+    }
 
     double x = 0;
     double y = 0;

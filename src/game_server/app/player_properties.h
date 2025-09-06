@@ -37,7 +37,39 @@ struct PlayerData {
     std::string token = "";
     size_t player_id = 0;
 
-    [[nodiscard]] auto operator<=>(const PlayerData&) const = default;
+    // Оператор равенства
+    bool operator==(const PlayerData& other) const {
+        return map_id == other.map_id &&
+               token == other.token &&
+               player_id == other.player_id;
+    }
+
+    // Оператор неравенства
+    bool operator!=(const PlayerData& other) const {
+        return !(*this == other);
+    }
+
+    // Оператор меньше
+    bool operator<(const PlayerData& other) const {
+        return map_id < other.map_id ||
+               token < other.token ||
+               player_id < other.player_id;
+    }
+
+    // Оператор меньше или равно
+    bool operator<=(const PlayerData& other) const {
+        return !(*this > other);
+    }
+
+    // Оператор больше
+    bool operator>(const PlayerData& other) const {
+        return other < *this;
+    }
+
+    // Оператор больше или равно
+    bool operator>=(const PlayerData& other) const {
+        return !(*this < other);
+    }
 };
 
 struct PlayerRecord {

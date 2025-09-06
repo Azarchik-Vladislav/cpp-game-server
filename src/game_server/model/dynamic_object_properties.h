@@ -13,14 +13,77 @@ struct SpeedUnit {
     double horizontal;
     double vertical;
 
-    constexpr auto operator<=>(const SpeedUnit&) const = default;
+    // Оператор равенства
+    bool operator==(const SpeedUnit& other) const {
+        return horizontal == other.horizontal &&
+               vertical == other.vertical;
+    }
+
+    // Оператор неравенства
+    bool operator!=(const SpeedUnit& other) const {
+        return !(*this == other);
+    }
+
+    // Оператор меньше
+    bool operator<(const SpeedUnit& other) const {
+        if (horizontal != other.horizontal) {
+            return horizontal < other.horizontal;
+        }
+        return vertical < other.vertical;
+    }
+
+    // Оператор меньше или равно
+    bool operator<=(const SpeedUnit& other) const {
+        return !(*this > other);
+    }
+
+    // Оператор больше
+    bool operator>(const SpeedUnit& other) const {
+        return other < *this;
+    }
+
+    // Оператор больше или равно
+    bool operator>=(const SpeedUnit& other) const {
+        return !(*this < other);
+    }
 }; 
 
 struct CoordObject {
     double x; 
     double y;
 
-    constexpr auto operator<=>(const CoordObject&) const = default;
+    // Оператор равенства
+    bool operator==(const CoordObject& other) const {
+        return x == other.x && y == other.y;
+    }
+
+    // Оператор неравенства
+    bool operator!=(const CoordObject& other) const {
+        return !(*this == other);
+    }
+
+    // Оператор меньше
+    bool operator<(const CoordObject& other) const {
+        if (x != other.x) {
+            return x < other.x;
+        }
+        return y < other.y;
+    }
+
+    // Оператор меньше или равно
+    bool operator<=(const CoordObject& other) const {
+        return !(*this > other);
+    }
+
+    // Оператор больше
+    bool operator>(const CoordObject& other) const {
+        return other < *this;
+    }
+
+    // Оператор больше или равно
+    bool operator>=(const CoordObject& other) const {
+        return !(*this < other);
+    }
 };
 
 enum class Direction {
@@ -45,7 +108,47 @@ public:
 
     bool IsPickedUp() const;
 
-    [[nodiscard]] auto operator<=>(const Loot&) const = default;
+    // Операторы сравнения
+    bool operator==(const Loot& other) const {
+        return id_ == other.id_ &&
+               type_ == other.type_ &&
+               cost_ == other.cost_ &&
+               position_ == other.position_ &&
+               is_picked_up_ == other.is_picked_up_;
+    }
+
+    bool operator!=(const Loot& other) const {
+        return !(*this == other);
+    }
+
+    bool operator<(const Loot& other) const {
+        if (id_ != other.id_) {
+            return id_ < other.id_;
+        }
+        if (type_ != other.type_) {
+            return type_ < other.type_;
+        }
+        if (cost_ != other.cost_) {
+            return cost_ < other.cost_;
+        }
+        if (position_ != other.position_) {
+            return position_ < other.position_;
+        }
+        return is_picked_up_ < other.is_picked_up_;
+    }
+
+    bool operator<=(const Loot& other) const {
+        return !(*this > other);
+    }
+
+    bool operator>(const Loot& other) const {
+        return other < *this;
+    }
+
+    bool operator>=(const Loot& other) const {
+        return !(*this < other);
+    }
+    
 private:
     size_t id_;
     size_t type_;

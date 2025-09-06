@@ -1,7 +1,5 @@
 #pragma once
 
-#include <compare>
-
 namespace geom {
 
 struct Vec2D {

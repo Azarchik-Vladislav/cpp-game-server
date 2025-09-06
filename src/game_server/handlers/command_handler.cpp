@@ -24,16 +24,16 @@ std::optional<Args> HandleCommands(int argc, const char *const argv[]) {
     po::store(po::parse_command_line(argc, argv, desc), vm);
     po::notify(vm);
 
-    if (vm.contains("help"s)) {
+    if (vm.count("help"s)) {
         std::cout << desc;
         return std::nullopt;
     }
 
-    if (!vm.contains("config-file"s)) {
+    if (!vm.count("config-file"s)) {
         throw std::runtime_error("Config file isn't set!");
     }
 
-    if (!vm.contains("www-root"s)) {
+    if (!vm.count("www-root"s)) {
         throw std::runtime_error("Static files directory isn't set!");
     }
 

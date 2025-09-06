@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <algorithm>
 
 #include "static_object_prorerties.h"
 
@@ -142,7 +143,7 @@ void Map::AddBuilding(const Building& building) {
 }
 
 void Map::AddOffice(Office office) {
-    if (warehouse_id_to_index_.contains(office.GetId())) {
+    if (warehouse_id_to_index_.count(office.GetId())) {
         throw std::invalid_argument("Duplicate warehouse");
     }
 

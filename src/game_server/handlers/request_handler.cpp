@@ -248,6 +248,6 @@ bool RequestHandler::IsSubPath(const fs::path& req_path) const {
 
 bool RequestHandler::ValidateCompability(http::verb method, TargetRequestType req_type) const {
     auto meth = valid_compability.find(method);
-    return meth != valid_compability.end() && meth->second.contains(req_type);
+    return meth != valid_compability.end() && meth->second.count(req_type);
 }
 } // namespace http_handler

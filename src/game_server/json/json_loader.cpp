@@ -62,7 +62,7 @@ void ThrowUnidentifiedError(const string& req_post) {
 }
 
 const ValueJSON* FindKey(const ObjJSON& obj_JSON, json::string_view key) {
-    const auto value_ptr = obj_JSON.if_contains(key);
+    const auto value_ptr = obj_JSON.if_count(key);
 
     if(!value_ptr) {
         json::string report(ERROR_KEY_NOT_FOUND);
@@ -150,9 +150,9 @@ Road LoadRoad(const ObjJSON& road_object) {
         const auto& y0 = FindKey(road_object, Y0)->as_int64(); 
 
         Point point({x0, y0});
-        if(const auto& x1 = road_object.if_contains(X1)) {
+        if(const auto& x1 = road_object.if_count(X1)) {
             return Road(Road::HORIZONTAL, point, x1->as_int64());
-        } else if( const auto& y1 = road_object.if_contains(Y1)){
+        } else if( const auto& y1 = road_object.if_count(Y1)){
             return Road(Road::VERTICAL, point, y1->as_int64()); 
         } else {
             throw std::runtime_error(ERROR_COORD_NOT_FOUND);

@@ -184,7 +184,7 @@ void GameSession::ProcessLoot() {
     for (const auto& office : offices) {
         auto pos = office.GetPosition();
         geom::Point2D point{static_cast<double>(pos.x), static_cast<double>(pos.y)};
-        items.emplace_back(point, OFFICE_WIDTH/2.);
+        items.emplace_back(Item{point, OFFICE_WIDTH/2.});
     }
 
     ItemGathererProvider::Gatherers gatherers;
@@ -195,7 +195,7 @@ void GameSession::ProcessLoot() {
         auto new_pos = dog->GetCoord();
         geom::Point2D prev_pos_2d{prev_pos.x, prev_pos.y};
         geom::Point2D new_pos_2d{new_pos.x, new_pos.y};
-        gatherers.emplace_back(prev_pos_2d, new_pos_2d, DOG_WIDTH/2.);
+        gatherers.emplace_back(Gatherer{prev_pos_2d, new_pos_2d, DOG_WIDTH/2.});
     }
 
     auto events = FindGatherEvents(ItemGathererProvider(std::move(items), std::move(gatherers)));

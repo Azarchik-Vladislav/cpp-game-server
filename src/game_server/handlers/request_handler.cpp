@@ -84,7 +84,7 @@ StringResponse RequestHandler::HandleErrorRequest(const StringRequest& req, Targ
             status = http::status::method_not_allowed;
             content_type = ContentType::APPLICATION_JSON;
             string target = "";
-            if(req.target().starts_with(UsingTargetPath::MAPS)){
+            if(req.target().substr(0,UsingTargetPath::MAPS.size()) == UsingTargetPath::MAPS){
                 target = UsingTargetPath::MAPS;
             } else {
                 target = req.target();
@@ -182,24 +182,24 @@ fs::path RequestHandler::DecodeURL(const fs::path& req_path) const {
 }
 
 TargetRequestType RequestHandler::ComputeRequestType(string_view target) const {
-    if(target.starts_with(UsingTargetPath::MAPS)) {
+    if(target.substr(0,UsingTargetPath::MAPS.szie()) == UsingTargetPath::MAPS) {
         return target.size() == UsingTargetPath::MAPS.size() ? TargetRequestType::GET_MAPS_INFO
                                                              : TargetRequestType::GET_MAP_BY_ID;
-    } else if(target.starts_with(UsingTargetPath::RECORDS)){
+    } else if(target.substr(0,UsingTargetPath::RECORDS.size() == UsingTargetPath::RECORDS)){
         return TargetRequestType::GET_RECORDS;
-    }else if(target.starts_with(UsingTargetPath::TICK)){
+    } else if(target.substr(0,UsingTargetPath::TICK.size()) == UsingTargetPath::TICK){
         return TargetRequestType::POST_TICK;
-    }else if(target.starts_with(UsingTargetPath::ACTION)) {
+    } else if(target.substr(0,UsingTargetPath::ACTION.size()) == UsingTargetPath::ACTION) {
         return TargetRequestType::POST_ACTION;
-    } else if(target.starts_with(UsingTargetPath::STATE)) {
+    } else if(target.substr(0,UsingTargetPath::STATE.size()) == UsingTargetPath::STATE) {
         return TargetRequestType::GET_STATE;
-    } else if (target.starts_with(UsingTargetPath::PLAYERS)) {
+    } else if (target.substr(0,UsingTargetPath::PLAYERS.size()) == UsingTargetPath::PLAYERS) {
         return TargetRequestType::GET_PLAYERS;
-    } else if (target.starts_with(UsingTargetPath::JOIN)) {
+    } else if (target.substr(0,UsingTargetPath::JOIN.size()) == UsingTargetPath::JOIN) {
         return TargetRequestType::POST_JOIN_GAME;
-    }else if(!target.starts_with(UsingTargetPath::API)) {
+    } else if(target.substr(0,UsingTargetPath::API.size()) != UsingTargetPath::API) {
         return TargetRequestType::GET_FILE;
-    } else if(target.starts_with(UsingTargetPath::API)) {
+    } else if(target.substr(0,UsingTargetPath::API.size()) == UsingTargetPath::API) {
         return TargetRequestType::ERROR_API;
     }
         

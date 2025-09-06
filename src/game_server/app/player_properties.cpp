@@ -92,7 +92,7 @@ std::optional<string> PlayersController::ValidateToken(const string& value_token
     static std::regex token_reg(TOKEN_REG.data());
     std::smatch m;
 
-    if(value_token.starts_with(BEARER)) {
+    if(value_token.substr(0,BEARER.size()) == BEARER) {
         auto pos = value_token.find(' ');
         if (pos != string::npos) {
             string token = value_token.substr(pos + 1, SIZE_TOKEN);
@@ -117,9 +117,18 @@ std::vector<PlayerRecord> PlayersController::SendIntoRetirement(const std::chron
     }
 
     //Безопасно удаляем игроков-пенсионеров
-    std::erase_if(token_to_players_, [](const auto& item) {
+    /*std::erase_if(token_to_players_, [](const auto& item) {
         return item.second.IsRetirement();
-    });
+    });*/
+
+    for (auto it = token_to_players_.begin(); it != token_to_players_.end();) {
+        
+        if(it->second. IsRetirement()) {
+            it = token_to_players_.erase(it);
+        } else {
+            ++it;
+        }
+    }
 
     return retirement_palyers;
 }

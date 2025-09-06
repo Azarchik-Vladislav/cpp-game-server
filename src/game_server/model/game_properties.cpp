@@ -218,9 +218,15 @@ void GameSession::ProcessLoot() {
         }
     }
 
-    std::erase_if(lost_objects_, [](const auto& obj) {
+    /*std::erase_if(lost_objects_, [](const auto& obj) {
         return obj.IsPickedUp();
-    });
+    });*/
+
+    lost_objects_.erase(
+        std::remove_if(lost_objects_.begin(), lost_objects_.end(),
+                       [](const auto& obj) { return obj->IsPickedUp() }),
+        lost_objects_.end()
+    );
 }
 
 size_t GameSession::GenerateRandomLootType() {

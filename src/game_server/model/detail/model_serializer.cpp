@@ -45,7 +45,7 @@ model::Dog DogRepr::Restore() const {
     dog.UpdateState(speed_, dir_);
     dog.AddScore(score_);
     
-    bool success;
+    bool success = true;
     if(!bag_.empty()) {
         success = std::all_of(bag_.begin(), bag_.end(), [&](const serialization::LootRepr& loot) {
             return dog.AddLoot(loot.Restore());

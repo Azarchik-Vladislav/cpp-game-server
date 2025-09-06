@@ -224,7 +224,7 @@ void GameSession::ProcessLoot() {
 
     lost_objects_.erase(
         std::remove_if(lost_objects_.begin(), lost_objects_.end(),
-                       [](const auto& obj) { return obj.IsPickedUp() }),
+                       [](const auto& obj) { return obj.IsPickedUp(); }),
         lost_objects_.end()
     );
 }

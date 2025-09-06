@@ -177,7 +177,7 @@ void GameSession::ProcessLoot() {
 
     for (const auto& obj : lost_objects_) {
         auto pos = obj.GetPosition();
-        items.emplace_back(geom::Point2D{pos.x, pos.y}, LOST_OBJECT_WIDTH/2.);
+        items.emplace_back(Item{geom::Point2D{pos.x, pos.y}, LOST_OBJECT_WIDTH/2.});
     }
 
     size_t offices_start = items.size();

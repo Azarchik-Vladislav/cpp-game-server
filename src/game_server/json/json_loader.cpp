@@ -62,15 +62,14 @@ void ThrowUnidentifiedError(const string& req_post) {
 }
 
 const ValueJSON* FindKey(const ObjJSON& obj_JSON, json::string_view key) {
-    const auto value_ptr = obj_JSON.if_count(key);
 
-    if(!value_ptr) {
+    if(obj_JSON.count(key) == 0) {
         json::string report(ERROR_KEY_NOT_FOUND);
         report += key;
         throw runtime_error(string(report));
     }
 
-    return value_ptr;
+    return obj_JSON[key];
 }
 
 ValueJSON ParseJSON(const string& value) {
@@ -150,10 +149,10 @@ Road LoadRoad(const ObjJSON& road_object) {
         const auto& y0 = FindKey(road_object, Y0)->as_int64(); 
 
         Point point({x0, y0});
-        if(const auto& x1 = road_object.if_count(X1)) {
-            return Road(Road::HORIZONTAL, point, x1->as_int64());
-        } else if( const auto& y1 = road_object.if_count(Y1)){
-            return Road(Road::VERTICAL, point, y1->as_int64()); 
+        if(road_object.count(X1) > 0) {
+            return Road(Road::HORIZONTAL, point, road_object[X1]->as_int64());
+        } else if(road_object.count(Y1) > 0){
+            return Road(Road::VERTICAL, point, road_object[Y1]->as_int64()); 
         } else {
             throw std::runtime_error(ERROR_COORD_NOT_FOUND);
         }
@@ -171,8 +170,8 @@ Building LoadBulding(const ObjJSON& building_object) {
         int64_t w = FindKey(building_object, W)->as_int64();
         int64_t h = FindKey(building_object, H)->as_int64();
 
-        return Building({Point(x,y),
-                         Size(w, h)});
+        return Building({Point{x,y},
+                         Size{w, h}});
     } catch(const runtime_error err) {
         throw InfrastructureLoadError(Infrastructure::BUILDING,
                                       json::serialize(building_object),
@@ -188,8 +187,8 @@ Office LoadOffice(const ObjJSON& office_object) {
         int64_t offsetX = FindKey(office_object, OFFSET_X)->as_int64();
         int64_t offsetY = FindKey(office_object, OFFSET_Y)->as_int64();
 
-        Point point(x, y);
-        Offset offset(offsetX, offsetY);
+        Point point{x, y};
+        Offset offset{offsetX, offsetY};
 
         return Office(id_office, point,offset);
     } catch(const runtime_error err) {

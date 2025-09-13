@@ -182,7 +182,7 @@ fs::path RequestHandler::DecodeURL(const fs::path& req_path) const {
 }
 
 TargetRequestType RequestHandler::ComputeRequestType(string_view target) const {
-    if(target.substr(0,UsingTargetPath::MAPS.szie()) == UsingTargetPath::MAPS) {
+    if(target.substr(0,UsingTargetPath::MAPS.size()) == UsingTargetPath::MAPS) {
         return target.size() == UsingTargetPath::MAPS.size() ? TargetRequestType::GET_MAPS_INFO
                                                              : TargetRequestType::GET_MAP_BY_ID;
     } else if(target.substr(0,UsingTargetPath::RECORDS.size()) == UsingTargetPath::RECORDS){

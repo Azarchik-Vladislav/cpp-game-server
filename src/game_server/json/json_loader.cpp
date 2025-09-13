@@ -69,7 +69,7 @@ const ValueJSON* FindKey(const ObjJSON& obj_JSON, json::string_view key) {
         throw runtime_error(string(report));
     }
 
-    return &obj_JSON[key];
+    return obj_JSON.at(key);
 }
 
 ValueJSON ParseJSON(const string& value) {
@@ -150,9 +150,9 @@ Road LoadRoad(const ObjJSON& road_object) {
 
         Point point({x0, y0});
         if(road_object.count(X1) > 0) {
-            return Road(Road::HORIZONTAL, point, road_object.at(X1)->as_int64());
+            return Road(Road::HORIZONTAL, point, road_object.at(X1).as_int64());
         } else if(road_object.count(Y1) > 0){
-            return Road(Road::VERTICAL, point, road_object[Y1].at(Y1)->as_int64()); 
+            return Road(Road::VERTICAL, point, road_object.at(Y1).as_int64()); 
         } else {
             throw std::runtime_error(ERROR_COORD_NOT_FOUND);
         }

@@ -185,7 +185,7 @@ TargetRequestType RequestHandler::ComputeRequestType(string_view target) const {
     if(target.substr(0,UsingTargetPath::MAPS.szie()) == UsingTargetPath::MAPS) {
         return target.size() == UsingTargetPath::MAPS.size() ? TargetRequestType::GET_MAPS_INFO
                                                              : TargetRequestType::GET_MAP_BY_ID;
-    } else if(target.substr(0,UsingTargetPath::RECORDS.size() == UsingTargetPath::RECORDS)){
+    } else if(target.substr(0,UsingTargetPath::RECORDS.size()) == UsingTargetPath::RECORDS){
         return TargetRequestType::GET_RECORDS;
     } else if(target.substr(0,UsingTargetPath::TICK.size()) == UsingTargetPath::TICK){
         return TargetRequestType::POST_TICK;

@@ -69,7 +69,7 @@ const ValueJSON* FindKey(const ObjJSON& obj_JSON, json::string_view key) {
         throw runtime_error(string(report));
     }
 
-    return obj_JSON.at(key);
+    return &obj_JSON.at(key);
 }
 
 ValueJSON ParseJSON(const string& value) {

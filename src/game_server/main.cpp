@@ -32,15 +32,26 @@ void RunWorkers(unsigned n, const Fn& fn) {
     n = std::max(1u, n);
     std::vector<std::thread> workers;
     workers.reserve(n - 1);
-    // Запускаем n-1 рабочих потоков, выполняющих функцию fn
-    while (--n) {
-        workers.emplace_back(fn);
-    }
-    fn();
 
-    for(int i = 0; i < n; ++i)
-    {
-        workers[i].join;
+    try{
+        // Запускаем n-1 рабочих потоков, выполняющих функцию fn
+        while (--n) {
+            workers.emplace_back(fn);
+        }
+        fn();
+
+        for(auto& worker : workers) {
+            if (worker.joinable()) {
+                worker.join();
+            }
+        }
+    } catch(...) {
+        for(auto& worker : workers) {
+            if (worker.joinable()) {
+                worker.join();
+            }
+        }
+        throw;
     }
 }
 }  // namespace

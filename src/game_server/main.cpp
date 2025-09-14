@@ -37,6 +37,11 @@ void RunWorkers(unsigned n, const Fn& fn) {
         workers.emplace_back(fn);
     }
     fn();
+
+    for(int i = 0; i < n; ++i)
+    {
+        workers[i].join;
+    }
 }
 }  // namespace
 

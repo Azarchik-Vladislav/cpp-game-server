@@ -43,7 +43,7 @@ void InitBoostLogFilter() {
     );*/
 
     log::add_file_log(
-        keywords::file_name = "../../logs/log_%Y%m%d.log",
+        keywords::file_name = "../logs/log_%Y%m%d.log",
         keywords::time_based_rotation = boost::log::sinks::file::rotation_at_time_point(0, 0, 0),
         keywords::auto_flush = true,
         keywords::format = &MyFormatter

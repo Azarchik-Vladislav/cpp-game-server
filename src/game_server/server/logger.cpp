@@ -36,8 +36,15 @@ void MyFormatter(log::record_view const &rec, log::formatting_ostream &strm) {
 void InitBoostLogFilter() {
     log::add_common_attributes();
 
-    log::add_console_log(
+    /*log::add_console_log(
         std::cout,
+        keywords::auto_flush = true,
+        keywords::format = &MyFormatter
+    );*/
+
+    log::add_file_log(
+        keywords::file_name = "../logs/log_%Y%m%d.log";
+        keywords::time_based_rotation = boost::log::sinks::file::rotation_at_time_point(0, 0, 0);
         keywords::auto_flush = true,
         keywords::format = &MyFormatter
     );

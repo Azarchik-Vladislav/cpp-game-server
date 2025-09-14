@@ -39,20 +39,22 @@ void GameSession::AddDogs(Dogs&& dogs) {
      *прибавив к id последней собаки единицу
      *ВАЖНО!!! Не будет работать, если производится сортировка, кроме сортировки по id;
     */
-    assert(dogs.front()->GetId() <= dogs.back()->GetId());
-
-    dogs_ = std::move(dogs);
+    
     if(!dogs_.empty()){
+        assert(dogs.front()->GetId() <= dogs.back()->GetId());
+
+        dogs_ = std::move(dogs);
         next_dog_id_ = dogs_.back()->GetId() + 1;
     } 
 }
 
 void GameSession::AddLostObjects(LostObjects &&lost_objects) {
     //аналогично ситуации с id собак
-    assert(lost_objects.front().GetId() <= lost_objects.back().GetId());
-
-    lost_objects_ = std::move(lost_objects);
+    
     if(!lost_objects_.empty()) {
+        assert(lost_objects.front().GetId() <= lost_objects.back().GetId());
+
+        lost_objects_ = std::move(lost_objects);
         next_loot_id_ = lost_objects_.back().GetId() + 1;
     }
 }
